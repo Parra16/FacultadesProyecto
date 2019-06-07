@@ -539,7 +539,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosed
 
     private void btnaltasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnaltasActionPerformed
-        switch (tipo) {
+        switch (tipo+1) {
             case 0:
                 if (Mensaje.pregunta(this, "¿Quiere dar de alta a: " + txtnomfac.getText() + "?") == JOptionPane.YES_OPTION) {
                     String[] s = {txtnomfac.getText()};
@@ -596,9 +596,44 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnbajasActionPerformed
 
     private void btnmodificaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnmodificaActionPerformed
-        String[] s = {"PREPA"};
-        r = ManipulaListas.inserta(r, s, 0, new Nodo("PREPA", new Facultad("PREPA", 1, "TOLUCA")), null);
-        System.out.println("alta exitosa PREPA");
+        switch (tipo) {
+            case 0:
+                if (Mensaje.pregunta(this, "¿Quiere Modificar a: " + txtnomfac.getText() + "?") == JOptionPane.YES_OPTION) {
+                    ((Facultad)actual.getObj()).setDir(txtdirfac.getText());
+                    Mensaje.exito(this, txtnomfac.getText() + " Modificada");
+                }
+                break;
+            case 1:
+                if (Mensaje.pregunta(this, "¿Quiere Modificar a: " + txtnomcar.getText() + "?") == JOptionPane.YES_OPTION) {
+                    ((Carrera)actual.getObj()).setAbreviatura(txtabreviacarr.getText());
+                    ((Carrera)actual.getObj()).setCurricula(Integer.parseInt(txtcurricar.getText()));
+                    ((Carrera)actual.getObj()).setClavefac(Integer.parseInt(txtidcar.getText()));
+                    Mensaje.exito(this, txtnomcar.getText() + " Modificado");
+                }
+                break;
+            case 2:
+                if (Mensaje.pregunta(this, "¿Quiere Modificar a: " + txtnommat.getText() + "?") == JOptionPane.YES_OPTION) {
+                    ((Materia)actual.getObj()).setCreditos(Integer.parseInt(txtcredmat.getText()));
+                    ((Materia)actual.getObj()).setSemestre(Integer.parseInt(txtsemesmat.getText()));
+                    Mensaje.exito(this, txtnommat.getText() + " Modificado");
+                }
+                break;
+            case 3:
+                if (Mensaje.pregunta(this, "¿Quiere dar de alta a: " + txtidgrup.getText() + "?") == JOptionPane.YES_OPTION) {
+                    ((Grupo)actual.getObj()).setDia(txtdiasgrup.getText());
+                    ((Grupo)actual.getObj()).setHoras(txthorasgrup.getText());
+                    Mensaje.exito(this, txtidgrup.getText() + " Modificado");
+                }
+                break;
+            case 4:
+                if (Mensaje.pregunta(this, "¿Quiere Modifificar a: " + txtnomalum.getText() + "?") == JOptionPane.YES_OPTION) {
+                    ((Alumno)actual.getObj()).setSemestrealu(Integer.parseInt(txtsemesalum.getText()));
+                    Mensaje.exito(this, txtnomalum.getText() + " Modificado");
+                }
+                break;
+        }
+        ActualizaArbol();
+    
     }//GEN-LAST:event_btnmodificaActionPerformed
 
     private void txtnomfacActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtnomfacActionPerformed
@@ -838,7 +873,7 @@ public class Principal extends javax.swing.JFrame {
         } else {
 
             if (actual.getObj() instanceof Facultad) {
-                tipo = 1;
+                tipo = 0;
                 Facultad act = (Facultad) actual.getObj();
                 txtnomfac.setText(act.getNomfacul());
                 txtidfac.setText(String.valueOf(act.getClavefac()));
@@ -848,7 +883,7 @@ public class Principal extends javax.swing.JFrame {
                 txtpruebas.setText(act.desp());
             } else {
                 if (actual.getObj() instanceof Carrera) {
-                    tipo = 2;
+                    tipo = 1;
                     Carrera act = (Carrera) actual.getObj();
                     txtnomcar.setText(act.getNomCarr());
                     txtidcar.setText(String.valueOf(act.getCurricula()));
@@ -858,7 +893,7 @@ public class Principal extends javax.swing.JFrame {
                     txtpruebas.setText(act.desp());
                 } else {
                     if (actual.getObj() instanceof Materia) {
-                        tipo = 3;
+                        tipo = 2;
                         Materia act = (Materia) actual.getObj();
                         txtnommat.setText(act.getNommateria());
                         txtcredmat.setText(String.valueOf(act.getCreditos()));
@@ -868,7 +903,7 @@ public class Principal extends javax.swing.JFrame {
                         txtpruebas.setText(act.desp());
                     } else {
                         if (actual.getObj() instanceof Grupo) {
-                            tipo = 4;
+                            tipo = 3;
                             Grupo act = (Grupo) actual.getObj();
                             txtidgrup.setText(act.getClavegrupo());
                             txthorasgrup.setText(act.getHoras());
