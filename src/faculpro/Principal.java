@@ -8,6 +8,7 @@ package faculpro;
 import cjb.ci.Mensaje;
 import faculpro.Nodo;
 import facultades.*;
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
@@ -18,19 +19,20 @@ import javax.swing.tree.TreePath;
  * @author PARRA
  */
 public class Principal extends javax.swing.JFrame {
-
+    
     public static Nodo r;
     public static Nodo actual;
-    public static int tipo = 0; //0 facultad,1 carrera,2 materia, 3 grupo, 4 alumno     
+    public static int tipo ; //0 facultad,1 carrera,2 materia, 3 grupo, 4 alumno     
     public static String s[];
+    public static boolean estado = true;//true==pasa false==modo edicion
 
     /**
      * Creates new form Principal
      */
     public Principal() {
         initComponents();
-        //cjb.ci.CtrlInterfaz.habilita(false,txtnomfac,txtidfac,txtdirfac,txtcurricar,txtnomcar,txtidcar,txtabreviacarr,txtnommat,txtcredmat,txtsemesmat,txtidgrup,
-        //                txthorasgrup,txtdiasgrup,txtnomalum,txtmatalum,txtsemesalum);
+        cjb.ci.CtrlInterfaz.habilita(false, txtnomfac, txtidfac, txtdirfac, txtcurricar, txtnomcar, txtidcar, txtabreviacarr, txtnommat, txtcredmat, txtsemesmat, txtidgrup,
+                txthorasgrup, txtdiasgrup, txtnomalum, txtmatrialum, txtsemesalum);
     }
 
     /**
@@ -94,6 +96,7 @@ public class Principal extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         txtpruebas = new javax.swing.JTextArea();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -441,6 +444,13 @@ public class Principal extends javax.swing.JFrame {
         txtpruebas.setRows(5);
         jScrollPane2.setViewportView(txtpruebas);
 
+        jButton2.setText("Alta Facultad");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -453,34 +463,33 @@ public class Principal extends javax.swing.JFrame {
                     .addComponent(jpcarrera, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jpfacultad, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jpmateria, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(113, 113, 113)
+                        .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(113, 113, 113)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(txtnbusca, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addComponent(btnaltas, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addContainerGap(170, Short.MAX_VALUE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(jButton1)
-                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                .addComponent(btnbajas, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(btnmodifica, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                        .addGap(0, 0, Short.MAX_VALUE))))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jp, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap())))
+                                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(txtnbusca, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(btnaltas, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addContainerGap(170, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jButton1)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(btnbajas, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(btnmodifica, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(54, 54, 54)
+                        .addComponent(jp, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(136, 136, 136)
+                        .addComponent(jButton2)
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
@@ -489,7 +498,7 @@ public class Principal extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 559, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
@@ -497,7 +506,9 @@ public class Principal extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(txtnbusca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel1))
-                                .addGap(8, 8, 8))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton2)
+                                .addGap(24, 24, 24))
                             .addComponent(jpfacultad, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -520,7 +531,7 @@ public class Principal extends javax.swing.JFrame {
                                 .addComponent(jButton1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(52, 52, 52)))))
+                                .addGap(56, 56, 56)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -528,7 +539,7 @@ public class Principal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-
+        
         r = ManipulaListas.carga(this);
         ActualizaArbol();
 
@@ -539,14 +550,12 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosed
 
     private void btnaltasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnaltasActionPerformed
-        switch (tipo+1) {
-            case 0:
-                if (Mensaje.pregunta(this, "¿Quiere dar de alta a: " + txtnomfac.getText() + "?") == JOptionPane.YES_OPTION) {
-                    String[] s = {txtnomfac.getText()};
-                    r = ManipulaListas.inserta(r, s, 0, new Nodo(txtnomfac.getText(), new Facultad(txtnomfac.getText(), Integer.parseInt(txtidfac.getText()), txtdirfac.getText())), null);
-                    Mensaje.exito(this, txtnomfac.getText() + " Agregado");
-                }
-                break;
+        if (estado) {
+            habilita(1,false);
+        }else{
+           
+        
+        switch (tipo + 1) {
             case 1:
                 if (Mensaje.pregunta(this, "¿Quiere dar de alta a: " + txtnomcar.getText() + "?") == JOptionPane.YES_OPTION) {
                     String[] s = {txtnomfac.getText(), txtnomcar.getText()};
@@ -571,12 +580,14 @@ public class Principal extends javax.swing.JFrame {
             case 4:
                 if (Mensaje.pregunta(this, "¿Quiere dar de alta a: " + txtnomalum.getText() + "?") == JOptionPane.YES_OPTION) {
                     String[] s = {txtnomfac.getText(), txtnomcar.getText(), txtnommat.getText(), txtidgrup.getText(), txtnomalum.getText()};
-                    r = ManipulaListas.inserta(r, s, 0, new Nodo(txtnomalum.getText(), new Alumno(txtnomalum.getText(), Integer.parseInt(txtmatrialum.getText()), Integer.parseInt(txtsemesalum.getText()) )), null);
+                    r = ManipulaListas.inserta(r, s, 0, new Nodo(txtnomalum.getText(), new Alumno(txtnomalum.getText(), Integer.parseInt(txtmatrialum.getText()), Integer.parseInt(txtsemesalum.getText()))), null);
                     Mensaje.exito(this, txtnomalum.getText() + " Agregado");
                 }
                 break;
         }
         ActualizaArbol();
+        habilita(1,false);
+        }
     }//GEN-LAST:event_btnaltasActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
@@ -584,56 +595,62 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosing
 
     private void btnbajasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbajasActionPerformed
-        TreePath ruta = jTArbol.getSelectionPath();
-        s=Borra(ruta);
-        if (Mensaje.pregunta(this, "seguro que desea eliminar"+s[s.length-1])==JOptionPane.YES_OPTION) {
+        //TreePath ruta = jTArbol.getSelectionPath();
+        //s = Borra(ruta);
+        if (Mensaje.pregunta(this, "seguro que desea eliminar" + s[s.length - 1]) == JOptionPane.YES_OPTION) {
             Nodo x[];
-            x=ManipulaListas.elimina(r, s, 0,actual);
-            r=x[0];
-            Mensaje.exito(this, x[1].getEtiqueta()+" Eliminado");
+            x = ManipulaListas.elimina(r, s, 0, actual);
+            r = x[0];
+            Mensaje.exito(this, x[1].getEtiqueta() + " Eliminado");
             ActualizaArbol();
         }
     }//GEN-LAST:event_btnbajasActionPerformed
 
     private void btnmodificaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnmodificaActionPerformed
-        switch (tipo) {
-            case 0:
-                if (Mensaje.pregunta(this, "¿Quiere Modificar a: " + txtnomfac.getText() + "?") == JOptionPane.YES_OPTION) {
-                    ((Facultad)actual.getObj()).setDir(txtdirfac.getText());
-                    Mensaje.exito(this, txtnomfac.getText() + " Modificada");
-                }
-                break;
-            case 1:
-                if (Mensaje.pregunta(this, "¿Quiere Modificar a: " + txtnomcar.getText() + "?") == JOptionPane.YES_OPTION) {
-                    ((Carrera)actual.getObj()).setAbreviatura(txtabreviacarr.getText());
-                    ((Carrera)actual.getObj()).setCurricula(Integer.parseInt(txtcurricar.getText()));
-                    ((Carrera)actual.getObj()).setClavefac(Integer.parseInt(txtidcar.getText()));
-                    Mensaje.exito(this, txtnomcar.getText() + " Modificado");
-                }
-                break;
-            case 2:
-                if (Mensaje.pregunta(this, "¿Quiere Modificar a: " + txtnommat.getText() + "?") == JOptionPane.YES_OPTION) {
-                    ((Materia)actual.getObj()).setCreditos(Integer.parseInt(txtcredmat.getText()));
-                    ((Materia)actual.getObj()).setSemestre(Integer.parseInt(txtsemesmat.getText()));
-                    Mensaje.exito(this, txtnommat.getText() + " Modificado");
-                }
-                break;
-            case 3:
-                if (Mensaje.pregunta(this, "¿Quiere dar de alta a: " + txtidgrup.getText() + "?") == JOptionPane.YES_OPTION) {
-                    ((Grupo)actual.getObj()).setDia(txtdiasgrup.getText());
-                    ((Grupo)actual.getObj()).setHoras(txthorasgrup.getText());
-                    Mensaje.exito(this, txtidgrup.getText() + " Modificado");
-                }
-                break;
-            case 4:
-                if (Mensaje.pregunta(this, "¿Quiere Modifificar a: " + txtnomalum.getText() + "?") == JOptionPane.YES_OPTION) {
-                    ((Alumno)actual.getObj()).setSemestrealu(Integer.parseInt(txtsemesalum.getText()));
-                    Mensaje.exito(this, txtnomalum.getText() + " Modificado");
-                }
-                break;
+        
+        if (estado) {
+            habilita(0,false);
+        } else {
+            switch (tipo) {
+                case 0:
+                    if (Mensaje.pregunta(this, "¿Quiere Modificar a: " + txtnomfac.getText() + "?") == JOptionPane.YES_OPTION) {
+                        ((Facultad) actual.getObj()).setDir(txtdirfac.getText());
+                        Mensaje.exito(this, txtnomfac.getText() + " Modificada");
+                        
+                    }
+                    break;
+                case 1:
+                    if (Mensaje.pregunta(this, "¿Quiere Modificar a: " + txtnomcar.getText() + "?") == JOptionPane.YES_OPTION) {
+                        ((Carrera) actual.getObj()).setAbreviatura(txtabreviacarr.getText());
+                        ((Carrera) actual.getObj()).setCurricula(Integer.parseInt(txtcurricar.getText()));
+                        ((Carrera) actual.getObj()).setClavefac(Integer.parseInt(txtidcar.getText()));
+                        Mensaje.exito(this, txtnomcar.getText() + " Modificado");
+                    }
+                    break;
+                case 2:
+                    if (Mensaje.pregunta(this, "¿Quiere Modificar a: " + txtnommat.getText() + "?") == JOptionPane.YES_OPTION) {
+                        ((Materia) actual.getObj()).setCreditos(Integer.parseInt(txtcredmat.getText()));
+                        ((Materia) actual.getObj()).setSemestre(Integer.parseInt(txtsemesmat.getText()));
+                        Mensaje.exito(this, txtnommat.getText() + " Modificado");
+                    }
+                    break;
+                case 3:
+                    if (Mensaje.pregunta(this, "¿Quiere dar de alta a: " + txtidgrup.getText() + "?") == JOptionPane.YES_OPTION) {
+                        ((Grupo) actual.getObj()).setDia(txtdiasgrup.getText());
+                        ((Grupo) actual.getObj()).setHoras(txthorasgrup.getText());
+                        Mensaje.exito(this, txtidgrup.getText() + " Modificado");
+                    }
+                    break;
+                case 4:
+                    if (Mensaje.pregunta(this, "¿Quiere Modifificar a: " + txtnomalum.getText() + "?") == JOptionPane.YES_OPTION) {
+                        ((Alumno) actual.getObj()).setSemestrealu(Integer.parseInt(txtsemesalum.getText()));
+                        Mensaje.exito(this, txtnomalum.getText() + " Modificado");
+                    }
+                    break;                
+            }
+            ActualizaArbol();
+            habilita(0,false);
         }
-        ActualizaArbol();
-    
     }//GEN-LAST:event_btnmodificaActionPerformed
 
     private void txtnomfacActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtnomfacActionPerformed
@@ -657,8 +674,8 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_txtnomalumActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-
-        txtpruebas.setText(String.valueOf(jTArbol.getSelectionCount()));
+        
+        txtpruebas.setText(String.valueOf(tipo));
 
 //        TreePath ruta = jTArbol.getSelectionPath();
 //        String n[]=Borra(ruta);
@@ -686,8 +703,24 @@ public class Principal extends javax.swing.JFrame {
 
     private void jTArbolKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTArbolKeyReleased
         Actualiza();
-        
+
     }//GEN-LAST:event_jTArbolKeyReleased
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        if (estado) {
+            habilita(1,true);
+        } else {
+            if (Mensaje.pregunta(this, "¿Quiere dar de alta a: " + txtnomfac.getText() + "?") == JOptionPane.YES_OPTION) {
+                String[] s = {txtnomfac.getText()};
+                r = ManipulaListas.inserta(r, s, 0, new Nodo(txtnomfac.getText(), new Facultad(txtnomfac.getText(), Integer.parseInt(txtidfac.getText()), txtdirfac.getText())), null);
+                Mensaje.exito(this, txtnomfac.getText() + " Agregado");
+            }            
+            ActualizaArbol();
+            habilita(1,true);
+        }
+        
+
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -729,6 +762,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton btnbajas;
     private javax.swing.JButton btnmodifica;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel16;
@@ -782,149 +816,227 @@ public class Principal extends javax.swing.JFrame {
     public void ActualizaArbol() {
         //jTArbol = null;
         //jTArbol = new JTree();
-        Nodo aux = r.getSiguiente();
-
         DefaultMutableTreeNode Instituciones = new DefaultMutableTreeNode("Facultades");
-        if (aux == null) {
-            Mensaje.error(this, "Listas vacias");
+        if (r == null) {
+            Mensaje.error(this, "No se encuentran datos");
         } else {
-            do {
-                DefaultMutableTreeNode Facu;
-                if (((Facultad) aux.getObj()).getClavefac() < 10) {
-                    Facu = new DefaultMutableTreeNode("0" + Integer.toString(((Facultad) aux.getObj()).getClavefac()) + ".- " + aux.getEtiqueta());
-                } else {
-                    Facu = new DefaultMutableTreeNode(Integer.toString(((Facultad) aux.getObj()).getClavefac()) + ".- " + aux.getEtiqueta());
-                }
-                Instituciones.add(Facu);
-                Nodo carAux = aux.getAbajo();
+            Nodo aux = r;
+            if (aux == null) {
+                Mensaje.error(this, "Listas vacias");
+            } else {
                 do {
-                    if (carAux == null) {
-                        break;
+                    aux = aux.getSiguiente();
+                    DefaultMutableTreeNode Facu;
+                    if (((Facultad) aux.getObj()).getClavefac() < 10) {
+                        Facu = new DefaultMutableTreeNode("0" + Integer.toString(((Facultad) aux.getObj()).getClavefac()) + ".- " + aux.getEtiqueta());
+                    } else {
+                        Facu = new DefaultMutableTreeNode(Integer.toString(((Facultad) aux.getObj()).getClavefac()) + ".- " + aux.getEtiqueta());
                     }
-                    DefaultMutableTreeNode Carrera = new DefaultMutableTreeNode(carAux.getEtiqueta());
-                    Facu.add(Carrera);
-                    Nodo matAux = carAux.getAbajo();
+                    Instituciones.add(Facu);
+                    Nodo carAux = aux.getAbajo();
                     do {
-                        if (matAux == null) {
+                        
+                        if (carAux == null) {
+                            System.out.println("break alu");
                             break;
                         }
-                        DefaultMutableTreeNode Materia = new DefaultMutableTreeNode(matAux.getEtiqueta());
-                        Carrera.add(Materia);
-                        Nodo gpoAux = matAux.getAbajo();
+                        carAux = carAux.getSiguiente();
+                        DefaultMutableTreeNode Carrera = new DefaultMutableTreeNode(carAux.getEtiqueta());
+                        Facu.add(Carrera);
+                        Nodo matAux = carAux.getAbajo();
                         do {
-                            if (gpoAux == null) {
+                            
+                            if (matAux == null) {
+                                System.out.println("break alu");
                                 break;
                             }
-                            DefaultMutableTreeNode Grupo = new DefaultMutableTreeNode(gpoAux.getEtiqueta());
-                            Materia.add(Grupo);
-                            Nodo aluAux = gpoAux.getAbajo();
+                            matAux = matAux.getSiguiente();
+                            DefaultMutableTreeNode Materia = new DefaultMutableTreeNode(matAux.getEtiqueta());
+                            Carrera.add(Materia);
+                            Nodo gpoAux = matAux.getAbajo();
                             do {
-                                if (aluAux == null) {
+                                
+                                if (gpoAux == null) {
+                                    System.out.println("break alu");
                                     break;
                                 }
-                                DefaultMutableTreeNode Alumno = new DefaultMutableTreeNode(aluAux.getEtiqueta());
-                                Grupo.add(Alumno);
-                                aluAux = aluAux.getAnterior();
-                            } while (aluAux != gpoAux.getAbajo());
-                            gpoAux = gpoAux.getAnterior();
-                        } while (gpoAux != matAux.getAbajo());
-                        matAux = matAux.getAnterior();
-                    } while (matAux != carAux.getAbajo());
-                    carAux = carAux.getAnterior();
-                } while (carAux != aux.getAbajo());
-                aux = aux.getSiguiente();
-
-            } while (aux != r);
-            jTArbol.setModel(new DefaultTreeModel(Instituciones));
+                                gpoAux = gpoAux.getSiguiente();
+                                DefaultMutableTreeNode Grupo = new DefaultMutableTreeNode(gpoAux.getEtiqueta());
+                                Materia.add(Grupo);
+                                Nodo aluAux = gpoAux.getAbajo();
+                                do {
+                                    
+                                    if (aluAux == null) {
+                                        System.out.println("break alu");
+                                        break;
+                                    }
+                                    aluAux = aluAux.getSiguiente();
+                                    DefaultMutableTreeNode Alumno = new DefaultMutableTreeNode(aluAux.getEtiqueta());
+                                    Grupo.add(Alumno);
+                                } while (aluAux != gpoAux.getAbajo());
+                            } while (gpoAux != matAux.getAbajo());
+                        } while (matAux != carAux.getAbajo());
+                    } while (carAux != aux.getAbajo());
+                } while (aux != r);
+            }
+            
         }
+        jTArbol.setModel(new DefaultTreeModel(Instituciones));
     }
-
+    
     public static String[] Borra(TreePath n) {//Obtiene ruta
         String p[] = new String[n.getPath().length - 1];
         
-        if (n==null) {
+        if (n == null) {
             System.out.println("null");
-        }else{
-        
-
-        for (int i = 1; i < n.getPath().length; i++) {
-            if (i != 1 ) {
-                p[i - 1] = String.valueOf(n.getPath()[i]);
-            } else {
-                if (i == 1) {
-                    p[i - 1] = String.valueOf(n.getPath()[i]).substring(5);
-                } 
+        } else {
+            
+            for (int i = 1; i < n.getPath().length; i++) {
+                if (i != 1) {// i!=5 si se mete matricula en el else
+                    p[i - 1] = String.valueOf(n.getPath()[i]);
+                } else {
+                    if (i == 1) {
+                        p[i - 1] = String.valueOf(n.getPath()[i]).substring(5);
+                    }
 //                else {
 //                    p[i - 1] = String.valueOf(n.getPath()[i]).substring(6);
 //                }
+                }
             }
-        }    
         }
         
         return p;
     }
-
+    
     public void Actualiza() {
         TreePath ruta = jTArbol.getSelectionPath();
-        s = Borra(ruta);
-        actual = ManipulaListas.busca(r, s, 0);
-        if (actual == null) {
-            System.out.println("nuloooo");
+        if (ruta.getPath().length == 1) {
+            tipo = 0;
         } else {
-
-            if (actual.getObj() instanceof Facultad) {
-                tipo = 0;
-                Facultad act = (Facultad) actual.getObj();
-                txtnomfac.setText(act.getNomfacul());
-                txtidfac.setText(String.valueOf(act.getClavefac()));
-                txtdirfac.setText(act.getDir());
-                cjb.ci.CtrlInterfaz.limpia(txtnomcar,txtidcar,txtabreviacarr,txtnommat,txtcredmat,txtsemesmat,txtidgrup,
-                        txthorasgrup,txtdiasgrup,txtnomalum,txtmatrialum,txtsemesalum);
-                txtpruebas.setText(act.desp());
+            
+            s = Borra(ruta);
+            actual = ManipulaListas.busca(r, s, 0);
+            if (actual == null) {
+                System.out.println("nuloooo");
             } else {
-                if (actual.getObj() instanceof Carrera) {
-                    tipo = 1;
-                    Carrera act = (Carrera) actual.getObj();
-                    txtnomcar.setText(act.getNomCarr());
-                    txtidcar.setText(String.valueOf(act.getCurricula()));
-                    txtabreviacarr.setText(act.getAbreviatura());
-                    cjb.ci.CtrlInterfaz.limpia(txtnommat,txtcredmat,txtsemesmat,txtidgrup,
-                        txthorasgrup,txtdiasgrup,txtnomalum,txtmatrialum,txtsemesalum);
+                
+                if (actual.getObj() instanceof Facultad) {
+                    tipo = 0;
+                    Facultad act = (Facultad) actual.getObj();
+                    txtnomfac.setText(act.getNomfacul());
+                    txtidfac.setText(String.valueOf(act.getClavefac()));
+                    txtdirfac.setText(act.getDir());
+                    cjb.ci.CtrlInterfaz.limpia(txtnomcar, txtidcar, txtabreviacarr, txtnommat, txtcredmat, txtsemesmat, txtidgrup,
+                            txthorasgrup, txtdiasgrup, txtnomalum, txtmatrialum, txtsemesalum);
                     txtpruebas.setText(act.desp());
                 } else {
-                    if (actual.getObj() instanceof Materia) {
-                        tipo = 2;
-                        Materia act = (Materia) actual.getObj();
-                        txtnommat.setText(act.getNommateria());
-                        txtcredmat.setText(String.valueOf(act.getCreditos()));
-                        txtsemesmat.setText(String.valueOf(act.getSemestre()));
-                        cjb.ci.CtrlInterfaz.limpia(txtidgrup,
-                        txthorasgrup,txtdiasgrup,txtnomalum,txtmatrialum,txtsemesalum);
+                    if (actual.getObj() instanceof Carrera) {
+                        tipo = 1;
+                        Carrera act = (Carrera) actual.getObj();
+                        txtnomcar.setText(act.getNomCarr());
+                        txtidcar.setText(String.valueOf(act.getCurricula()));
+                        txtabreviacarr.setText(act.getAbreviatura());
+                        cjb.ci.CtrlInterfaz.limpia(txtnommat, txtcredmat, txtsemesmat, txtidgrup,
+                                txthorasgrup, txtdiasgrup, txtnomalum, txtmatrialum, txtsemesalum);
                         txtpruebas.setText(act.desp());
                     } else {
-                        if (actual.getObj() instanceof Grupo) {
-                            tipo = 3;
-                            Grupo act = (Grupo) actual.getObj();
-                            txtidgrup.setText(act.getClavegrupo());
-                            txthorasgrup.setText(act.getHoras());
-                            txtdiasgrup.setText(act.getDia());
-                            cjb.ci.CtrlInterfaz.limpia(txtnomalum,txtmatrialum,txtsemesalum);
+                        if (actual.getObj() instanceof Materia) {
+                            tipo = 2;
+                            Materia act = (Materia) actual.getObj();
+                            txtnommat.setText(act.getNommateria());
+                            txtcredmat.setText(String.valueOf(act.getCreditos()));
+                            txtsemesmat.setText(String.valueOf(act.getSemestre()));
+                            cjb.ci.CtrlInterfaz.limpia(txtidgrup,
+                                    txthorasgrup, txtdiasgrup, txtnomalum, txtmatrialum, txtsemesalum);
                             txtpruebas.setText(act.desp());
+                        } else {
+                            if (actual.getObj() instanceof Grupo) {
+                                tipo = 3;
+                                Grupo act = (Grupo) actual.getObj();
+                                txtidgrup.setText(act.getClavegrupo());
+                                txthorasgrup.setText(act.getHoras());
+                                txtdiasgrup.setText(act.getDia());
+                                cjb.ci.CtrlInterfaz.limpia(txtnomalum, txtmatrialum, txtsemesalum);
+                                txtpruebas.setText(act.desp());
+                            } else {
+                                if (actual.getObj() instanceof Alumno) {
+                                    Mensaje.exito(this, "entrando a alumnos");
+                                    tipo = 4;
+                                    Alumno act = (Alumno) actual.getObj();
+                                    txtnomalum.setText(act.getNomalumno());
+                                    txtmatrialum.setText(String.valueOf(act.getMatricula()));
+                                    txtsemesalum.setText(String.valueOf(act.getSemestrealu()));
+                                    txtpruebas.setText(act.desp());
+                                }
+                            }
                         }
-//                        } else {
-//                            if (actual.getObj() instanceof Alumno) {
-//                                Mensaje.exito(this, "entrando a alumnos");
-//                                tipo = 5;
-//                                Alumno act = (Alumno) actual.getObj();
-//                                txtnomalum.setText(act.getNomalumno());
-//                                txtmatalum.setText(String.valueOf(act.getMatricula()));
-//                                txtsemesalum.setText(String.valueOf(act.getSemestrealu()));
-//                                txtpruebas.setText(act.desp());
-//                            }
-//                        }
                     }
                 }
             }
         }
     }
+    
+    public void habilita(int i,boolean facu) {
+        int x = tipo + i;
+        
+        if (facu) {
+                if (i==1) {
+                   cjb.ci.CtrlInterfaz.habilita(estado, txtnomfac,txtidfac);
+                   cjb.ci.CtrlInterfaz.limpia(txtnomfac,txtidfac,txtdirfac);
+                }
+                cjb.ci.CtrlInterfaz.habilita(estado, txtdirfac);
+        }else{
+                    switch (x) {
+//            case 0:
+//                if (i==1) {
+//                   cjb.ci.CtrlInterfaz.habilita(estado, txtnomfac,txtidfac);
+//                   cjb.ci.CtrlInterfaz.limpia(txtnomfac,txtidfac,txtdirfac);
+//                }
+//                cjb.ci.CtrlInterfaz.habilita(estado, txtdirfac);
+//                break;
+            case 1:
+                if (i==1) {
+                   cjb.ci.CtrlInterfaz.habilita(estado,txtnomcar,txtidcar);
+                   cjb.ci.CtrlInterfaz.limpia(txtnomcar,txtidcar,txtabreviacarr, txtcurricar, txtidcar);
+                }
+                cjb.ci.CtrlInterfaz.habilita(estado, txtabreviacarr, txtcurricar, txtidcar);
+                break;
+            case 2:
+                if (i==1) {
+                   cjb.ci.CtrlInterfaz.habilita(estado,txtnommat);
+                   cjb.ci.CtrlInterfaz.limpia(txtnommat,txtcredmat, txtsemesmat);
+                }
+                cjb.ci.CtrlInterfaz.habilita(estado, txtcredmat, txtsemesmat);
+                break;
+            case 3:
+                if (i==1) {
+                   cjb.ci.CtrlInterfaz.habilita(estado,txtidgrup);
+                   cjb.ci.CtrlInterfaz.limpia(txtidgrup,txtdiasgrup, txthorasgrup);
+                }
+                cjb.ci.CtrlInterfaz.habilita(estado, txtdiasgrup, txthorasgrup);
+                break;
+            case 4:
+                if (i==1) {
+                   cjb.ci.CtrlInterfaz.habilita(estado,txtnomalum);
+                   cjb.ci.CtrlInterfaz.limpia(txtmatrialum,txtnomalum, txtsemesalum);
+                }
+                cjb.ci.CtrlInterfaz.habilita(estado, txtsemesalum);
+                break;
+        }
+        }
+        
+
+        if (i == 1) {
+            cjb.ci.CtrlInterfaz.habilita(!estado, btnmodifica, btnbajas);
+        } else {
+            cjb.ci.CtrlInterfaz.habilita(!estado, btnaltas, btnbajas);            
+        }
+        jTArbol.setEnabled(!estado);
+        if (estado) {
+            estado=false;
+        }else{
+            estado=true;
+        }
+   
+}
 }
